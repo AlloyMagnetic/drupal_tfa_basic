@@ -9,6 +9,11 @@ function tfa_basic_permission() {
       'title' => t('Set up TFA for account'),
       'description' => t('Allow users to set up TFA for their account. Users with "administer users" permission can edit other account\'s TFA.'),
     ),
+    'bypass tfa setup password' => array(
+      'title' => t('Bypass TFA configuration password requirement'),
+      'description' => t('Allow skipping password entry when configuring a user\'s TFA.'),
+      'restrict access' => TRUE,
+    ),
   );
 }
 

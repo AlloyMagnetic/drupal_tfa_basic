@@ -340,7 +340,7 @@ function tfa_basic_setup_form($form, &$form_state, $account, $method = 'tfa_basi
   $enabled = isset($tfa_data['status']) && $tfa_data['status'] ? TRUE : FALSE;
 
   // Always require a password on the first time through.
-  if (empty($form_state['storage'])) {
+  if (!user_access('bypass tfa setup password') and empty($form_state['storage'])) {
     // Allow administrators to change TFA settings for another account.
     if ($account->uid != $user->uid && user_access('administer users')) {
       $current_pass_description = t('Enter your current password to alter TFA settings for account %name.', array('%name' => $account->name));
@@ -515,7 +515,7 @@ function tfa_basic_setup_form($form, &$form_state, $account, $method = 'tfa_basi
 function tfa_basic_setup_form_validate($form, &$form_state) {
   global $user;
   $account = $form['account']['#value'];
-  if (isset($form_state['values']['current_pass'])) {
+  if (!user_access('bypass tfa setup password') and isset($form_state['values']['current_pass'])) {
     // Allow administrators to change TFA settings for another account.
     if ($account->uid != $user->uid && user_access('administer users')) {
       $account = $user;
